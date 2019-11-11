@@ -547,6 +547,8 @@ Ensuite il faut avoir :
 ![img](assets/p5_serial_capture.png)
 - la page web *visualisation_live* d'ouverte dans votre navigateur via le serveur web de vscode studio.
 
+Le [code](visualisation_live/sketch.js) est normalement suffisament commenté pour que vous puissiez comprendre ce qu'il s'y passe .
+
 Si tous ces éléments sont réunis vous devriez voir apparaitre le résultat de vos mesure actualisé en live. 
 
 
