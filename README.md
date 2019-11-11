@@ -1,6 +1,8 @@
 # p5js_gestes_de_l_ennui
 This repo is a project for graphic designer as an introduction to p5js and arduino. The goal is to record data with arduino and visualize it with p5js.
 
+Ce repo est un projet destiné à des designers graphique, servant d'introduction à p5js and arduino. 
+
 L'objectif de ce projet est un travail sur la représentation de données : de la captation et l'impression.
 
 Le sujet d'étude se portera sur la capatation de gestes du quotidien s'inscrivant dans une temporalité fugace porteur de la marque de l'ennui, afin de les enregistrer et les représenter dans le but de les péréniser via le processus de print.
@@ -28,11 +30,21 @@ Le résultat que nous chercherons à atteindre et celui-ci :
 
 ![img](assets/realisation_finale_black.png)
 
-Vous pouvez télécharger l'ensemble de cette ressource en cliquant sur le petit bouton vert en haut à droite *clone and download*
+Vous pouvez télécharger l'ensemble de cette ressource en cliquant sur le petit bouton vert en haut à droite *clone and download*.
 
 ![img](assets/download.png)
 
 Une fois télécharger vous pouvez décompresser le fichier et ajouter le dossier obtenu à votre workspace visual studio.
+
+Bien sûr vous n'êtes absolument pas tenus à utiliser cette forme de visualisation : les capteurs que vous utiliserez, la façon dont vous les placerez et l'interprétation graphique des données que vous enregistrerez sont à votre discrétion. 
+
+Vous pouvez vous référer à ce site pour inspiration : https://informationisbeautiful.net/
+Vous pouvez aussi consulter ces livres disponibles à l'atelier numérique :
+- https://www.amazon.fr/gp/product/1472578309/ref=ppx_yo_dt_b_asin_title_o02_s01?ie=UTF8&psc=1
+- https://www.amazon.fr/gp/product/2072792002/ref=ppx_yo_dt_b_asin_title_o02_s02?ie=UTF8&psc=1
+- https://www.amazon.fr/gp/product/1473912148/ref=od_aui_detailpages01?ie=UTF8&psc=1
+
+Il est cependant obligatoir de concevoir un cartel similaire à celui proposé dans cet exemple.  
 
 # Captation des données
 
@@ -278,5 +290,264 @@ A chaque fois que des données sont reçues nous rechargeons le fichier, ajouton
 Après avoir réalisé un enregistrement, il faut bien penser à renommer le fichier *data.json* avec un nom équivoque et à recréer un fichier vide si l'on veut relancer un enregistrement.
 
 # Représentation des données
+P5js est très proche de processing. Nous n'allons donc pas rentrer dans les détails du fonctionnement de p5js.
+
+
+## Principes de base de p5.riso
+
+Dans le dossier *visualisation_template*, vous trouverez un système de fichier comprenant :
+- un dossier nommé lib comprenant les bibliothèques nécessaires à votre travail.
+- un fichier index.html, comprenant les principaux éléments de css, le titre de votre page et les liens vers les bibliothèques utilisées.
+- un fichier sketch.js qui va contenir votre code. Celui est pour l'instant uniquement rempli avec les différentes fonctions que nous utiliserons, mais il ne fait rien du tout.
+
+Vous pouvez copier/coller ce dossier pour créer votre propre projet.
+
+Voici le contenu du fichier **sketch.js**
+
+```js
+// permet de précharger des fichiers (comme nos données ou éventuellement des images)
+function preload() {
+  
+}
+
+// fonction exécutée une seule fois au démarrage de notre programme
+function setup() {
+  createCanvas(windowHeight, windowHeight); // on crée un espace de dessin <=> size()
+  pixelDensity(1) // nécessaire pour la bibliothèque riso
+}
+
+function draw() {
+  background(255);
+  // ces trois fonctions sont nécessaires à la bibliothèque riso
+  clearRiso(); // remove everything
+  drawViz(); // draw each viz in its layer => nous allons écrire notre code dans cette fonction
+  drawRiso(); // display the layers drawn previously
+}
+
+function drawViz() {
+    // c'est ici que nous allons écrire la plus grosse partie de notre code.
+
+
+}
+
+// exporter nos fichiers pour le print lorsque nous appuyons sur la souris.
+function mouseClicked() {
+  exportRiso();
+}
+```
+D'un point de vue très pragmatique, la bibliothèques p5.riso fonctionne avec un système de calques.
+Nous définirons donc des objets permettant de dessiner différents éléments dans un calque à l'aide des fonction de dessin de base de processing ou p5js. Lorsque nous cliquerons sur la souris, la bibliothèque p5.riso effectuera un export : pour un chaque calque un png sera téléchargé et pourra ensuite être utilisé en risographie ou en sérigraphie.
+
+A noter que dans le cadre de l'utilisation de p5.riso, l'utilisation des fonctions **fill()** et **stroke()** sont un peu différentes. Ici il ne sera pas possible de spécifier une couleur étant donné que nous allons dessiner dans un calque spécifique et que c'est ce calque qui définira la couleur des éléments que nous dessinerons. Ces deux fonction prendront donc comme paramètre une valeur entre 0 et 255 qui correspondra à un niveau de transaprence - 0 étant totalement transparent et 255 complétement opaque.
+- https://antiboredom.github.io/p5.riso/#fill
+- https://antiboredom.github.io/p5.riso/#stroke
+
+
+## Importer des données.
+
+Nous allons tout de suite nous attacher à importer les données enregistrées à l'étape précédente.
+
+Pour cela nous devons d'abord créer une variable - en javascript les variables ne sont pas typées. Adieu donc les *int*, *float*, *string* etc. toutes nos variables auront le même type *let* - cela peut aussi bien avoir des avantages que des inconvénients.
+
+Créeons donc avant le setup() une première variable qui nous permettera de stocker et donc d'accéder à nos données.
+
+```js
+let data
+```
+
+Nous allons donc charger nos données dans cet objet, et nous allons le faire dans la fonction **preload()** qui est destinée à gérer le chargement de tous les éléments dont pourrions avoir besoin dans notre programe.
+
+```js
+function preload() {
+  data = loadJSON("data.json", function () {
+    console.log("done")
+  })
+```
+Nous appelons donc la fonction [loadJson()](https://p5js.org/reference/#/p5/loadJSON), cette fonction va donc charger des données au format JSON dans notre objet data. Elle va charger le fichier que nous passons en tant que premier paramètre (le fichier *data.json* qui doit être rangé dans le même dossier que nos fichiers *index.html* et *sketch.js*), le second paramètre est une fonction javascript qui s'éxecutera quand le chargement sera fini (ici elle imprime dans la console du navigateur le mot "done")- ce type de fonction s'appelle une fonction **callback** et est très utilisée en javascript, elle ne porte pas de nom et est donc désignée comme une fonction anonyme.
+
+Si le chargement de notre fichier a réussi, il est donc possible de le vérifier dans la [console javascript de votre navigateur](https://lucidchart.zendesk.com/hc/fr/articles/207323676-Comment-ouvrir-la-console-JavaScript). Si un message apparait, il est possible d'imprimer d'autres choses comme par exemple, le nombre d'entrées de notre fichier *data.json*, ou le premier élément.
+
+```js
+function preload() {
+  data = loadJSON("data.json", function () {
+    console.log("done")
+    console.log(Object.keys(data).length) // nombre d'entrées
+    console.log(data[0]) // première entrée de notre fichier
+    console.log(data[0].timestamp) // timestamp du premier point enregistré
+    console.log(data[1].x) // valeur "x" du deuxième point enregistré
+  })
+```
+On peut donc accéder aux différents points enregistrés en utilisants les crochets **'['** et **']'** en indiquant à l'intérieur l'index du point qui nous intéresse; ainsi qu'au différentes valeurs de chaque point en utilisant l'accesseur **'.'**. Celui-ci doit être suivi d'un chaîne de caractère correspondant à une entrée de notre fichier JSON (dans notre cas 'x', 'y', 'z' ou 'timestamp').
+
+## Créer un calque et représenter des données.
+
+Nous allons donc créer notre premier calque pour représenter les données issues de l'axe X de notre accéléromètre.
+
+**Avant le setup()** nous allons créer une nouvelle variable :
+```js
+let layerX;
+```
+
+**Dans le setup()** nous allons l'initialiser comme étant un calque de la bibliothèque riso ayant pour couleur le jaune.
+
+```js
+function setup() {
+  createCanvas(windowHeight, windowHeight);
+  pixelDensity(1)
+
+  layerX = new Riso('yellow');
+}
+```
+Nous pouvons maintenant dessiner dedans. Nous allons faire cela à l'intérieur de la fonction **drawViz()**. 
+Nous allons représenter nos données de manière radiale, et pour cela nous allons utiliser les [coordonnées polaires](https://fr.wikipedia.org/wiki/Coordonn%C3%A9es_polaires)
+Pour résumer alors que dans notre système classique - cartésien de coordonnées nous utilisons l'abscisse et l'ordonnée d'un point pour définir sa position dans le plan, il est aussi possible d'utiliser un angle et un rayon. Comme illustré ici : https://www.openprocessing.org/sketch/151087
+
+Dans notre cas nous allons donc faire en sorte que l'index de nos points soit transformé en une valeur d'angle pour parcourir un tour complet d'un cercle et la valeur mesurée sera transformée en un rayon pour qu'en fonction de cette valeur notre point soit plus éloigné ou moins éloigné du centre.
+
+En terme de code il faudra cependant tranformer ces valeurs en positions cartésiennes afin de les positionner avec processing, mais il ne s'agit là que de l'application de formule mathématiques :
+
+```
+X = abscisse_du_centre + rayon x cosinus (angle)
+Y = ordonnée_du_centre + rayon x sinus (angle)
+```
+Le but est d'obtenir ce type de forme : 
+![img](assets/layerX.png)
+
+A l'intérieur de **drawViz()**, nous allons donc commencer par créer une variable qui contiendra le nombre de points que nous avons à représenter.
+
+```js
+function drawViz() {
+    let dataSize = Object.keys(data).length;
+}
+```
+Nous allons donc maintenant pouvoir créer une boucle **for()** pour parcourir tous les points enregistrés précédement :
+
+```js
+for (let i = 0; i < dataSize; i++) {
+    
+}
+```
+et nous pourrons donc utiliser la fonction **[map()](https://p5js.org/reference/#/p5/map)** pour calculer les coordonnées de nos points ... nous transformons :
+- les données de l'accéléromètre *data[i].x* qui sont comprises entre -1 et 1 en une valeur qui sera interprétée comme un rayon et comprise entre 25 pixels et environ la moitié de la hauteur de notre dessin.
+- l'index du point que nous traitons qui est compris entre 0 et dataSize, en une valeur qui sera interprétée comme un angle et donc comprise entre 0 et 2xPI radians (pour faire le tour complet du cercle).
+
+```js
+layerX.fill(255); // dessiner nos formes avec un remplissage opaque
+for (let i = 0; i < dataSize; i++) {
+    let r = map(data[i].y, -1, 1, 25, height * 0.45) // données de l'accéléromètre
+    let angle = map(i, 0, dataSize, 0, TWO_PI) // index du point.
+    let x = width * 0.5 + r * cos(angle) // abscisse calculée par application de la formule
+    let y = height * 0.4 + r * sin(angle) // ordonnée calculée par application de la formule
+    layerX.ellipse(x, y,5,5)
+}
+```
+
+Pour l'instant, nous avons dessiné des cercles pour chaque point, mais nous voulons dessiner une forme pleine et nous allons pour cela utiliser des **[curveVertex()](https://p5js.org/reference/#/p5/curveVertex)**
+
+```js
+layerX.fill(255); // dessiner nos formes avec un remplissage opaque
+layerX.beginShape();
+for (let i = 0; i < dataSize; i++) {
+    let r = map(data[i].y, -1, 1, 25, height * 0.45) // données de l'accéléromètre
+    let angle = map(i, 0, dataSize, 0, TWO_PI) // index du point.
+    let x = width * 0.5 + r * cos(angle) // abscisse calculée par application de la formule
+    let y = height * 0.4 + r * sin(angle) // ordonnée calculée par application de la formule
+    layerX.curveVertex(x, y)
+}
+layerX.endShape();
+```
+
+Une fois cela fait, il est assez simple de reproduire ce procédé 3 fois afin d'obtenir les dessins issus des données des 3 axes de l'accéléromètre chacun dans un calque de couleur différent.
+
+## Créer un fond
+
+Créer un fond est assez simple : il s'agit simplement de créer un calque noir vide. On crée une variable **avant le setup()** :
+
+```js
+let back;
+```
+
+**Dans le setup()** on l'initialise comme un calque noir :
+
+```js
+back = new Riso('black')
+```
+
+Enfin dans la fonction **drawViz()**, on dessine un rectangle noir opaque couvrant toute notre zone de dessin 
+
+```js
+back.fill(255)
+back.rect(0,0,width,height)
+```
+
+En faisant cela cependant nous recouvrons toute notre visualisation de noir, il faut utiliser la fonction **[cutout()](https://antiboredom.github.io/p5.riso/#cutout)** pour réaliser des découpes et laisser apparaitre nos autres calques. Cette opération est à réaliser à la toute fin de notre process de dessin : quand toutes les formes ont été dessinées
+
+```js
+back.cutout(layerX)
+```
+
+## Créer le cartel
+
+Le cartel va être produit de la même manière que les autres calques, il sera crée dans un calque blanc nommé 'info'
+
+```js
+let info
+// (...)
+
+function setup(){
+    // (...)
+    info = new Riso('white')
+    // (...)
+}
+```
+
+Ici les choses seront plus normées, car les différents cartels devront être identiques. Il est séparé de votre image par une ligne de 3px :
+
+```js
+info.stroke(255);
+info.strokeWeight(3);
+info.line(0, height * 0.8, width, height * 0.8);
+```
+
+Il doit comporter le nom de votre image, en Arial bold 36, suivi de vos noms :
+
+```js
+info.noStroke();
+info.fill(255);
+info.textStyle(BOLD);
+info.textFont('Arial');
+info.textAlign(LEFT, CENTER);
+info.textSize(36);
+info.text('"Sleepy Head" Patterns -', 0, height * 0.83);
+info.text('  b2renger', 0, height * 0.87);
+```
+
+Dessous doit être indiqué en italic 20, la manière dont vous avez mesuré les données et la durée de la mesure.
+
+```js
+info.textSize(20);
+info.textStyle(ITALIC);
+info.text('   8th of October 2019 from 9:55:18 to 9:55:27 am', 0, height * 0.93);
+info.text('   acceleromter mounted on the back of the head.', 0, height * 0.96);
+```
+Il peut être nécessaire d'utiliser l'espace restant à droite pour inclure une légende nécessaire à la compréhension de votre image.
+
+Vous avez maintenant tous les éléments nécessaires pour réaliser votre projet, vous pouvez consulter le code de l'image réalisée [ici](visualisation/sketch.js).
+
+
+# (Optionnel) visualiser des données en live !
+
+Il est bien sûr possible d'avoir une connection directe en votre carte arduino et votre programme p5js afin de visualiser les données en direct.
+
+Pour cela il est nécessaire de disposer de l'application [p5.serialcontrol](https://github.com/p5-serial/p5.serialcontrol/releases) pour votre système d'exploitation.
+
+Ensuite il faut avoir :
+- une carte arduino avec le programme téléversé et connectée en usb
+- l'application p5.serialcontrol lancée et ce avec le bon port sélectionné
+![img](assets/p5_serial_capture.png)
+- la page web *visualisation_live* d'ouverte dans votre navigateur via le serveur web de vscode studio.
+
+Si tous ces éléments sont réunis vous devriez voir apparaitre le résultat de vos mesure actualisé en live. 
+
 
 
