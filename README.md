@@ -46,6 +46,22 @@ Vous pouvez aussi consulter ces livres disponibles à l'atelier numérique :
 
 Il est cependant obligatoir de concevoir un cartel similaire à celui proposé dans cet exemple.  
 
+# Contenu
+
+* [Captation des données](https://github.com/b2renger/p5js_gestes_de_l_ennui#captation-des-donn%C3%A9es)<br>
+  * [Typologies des donnés et positionnement du capteur](https://github.com/b2renger/p5js_gestes_de_l_ennui#typologies-des-donn%C3%A9s-et-positionnement-du-capteur)<br>
+  * [Circuit électronique](https://github.com/b2renger/p5js_gestes_de_l_ennui#circuit-%C3%A9lectronique)<br>
+  * [Code arduino](https://github.com/b2renger/p5js_gestes_de_l_ennui#code-arduino)<br>
+  * [Code processing et enregistrement des données](https://github.com/b2renger/p5js_gestes_de_l_ennui#code-processing-et-enregistrement-des-donn%C3%A9es)<br>
+* [Représentation des données](https://github.com/b2renger/p5js_gestes_de_l_ennui#repr%C3%A9sentation-des-donn%C3%A9es)<br>
+  * [Principes de base de p5.riso](https://github.com/b2renger/p5js_gestes_de_l_ennui#principes-de-base-de-p5riso)<br>
+  * [Importer des données](https://github.com/b2renger/p5js_gestes_de_l_ennui#importer-des-donn%C3%A9es)<br>
+  * [Créer un calque et représenter des données](https://github.com/b2renger/p5js_gestes_de_l_ennui#cr%C3%A9er-un-calque-et-repr%C3%A9senter-des-donn%C3%A9es)<br>
+  * [Créer un fond](https://github.com/b2renger/p5js_gestes_de_l_ennui#cr%C3%A9er-un-fond)<br>
+  * [Créer le cartel](https://github.com/b2renger/p5js_gestes_de_l_ennui#cr%C3%A9er-le-cartel)<br>
+* [(Optionnel) visualiser des données en live !](https://github.com/b2renger/p5js_gestes_de_l_ennui#optionnel-visualiser-des-donn%C3%A9es-en-live-)<br>
+
+
 # Captation des données
 
 ## Typologies des donnés et positionnement du capteur
