@@ -44,7 +44,7 @@ Vous pouvez aussi consulter ces livres disponibles à l'atelier numérique :
 - https://www.amazon.fr/gp/product/2072792002/ref=ppx_yo_dt_b_asin_title_o02_s02?ie=UTF8&psc=1
 - https://www.amazon.fr/gp/product/1473912148/ref=od_aui_detailpages01?ie=UTF8&psc=1
 
-Il est cependant obligatoir de concevoir un cartel similaire à celui proposé dans cet exemple.  
+Il est cependant obligatoire de concevoir un cartel similaire à celui proposé dans cet exemple.  
 
 # Contenu
 
@@ -76,12 +76,15 @@ Il sera orienté de manière à ce que :
 Une ressource intéressante sera donc cette entrée dans le cours d'introduction à arduino :
 https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre
 
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
 
 ## Circuit électronique
 
 Comme présenté dans l'introduction à arduino fournie en référence, le montage électronique devra s'effectuer comme suit :
 
 ![img](assets/read_from_3axisAccelerometer.png)
+
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
 
 ## Code arduino 
 
@@ -194,6 +197,8 @@ Serial.println(json);
 
 Nous voici donc avec notre code arduino complet. Celui-ci permet de lire les données d'un accéléromètre et de les mettre en forme afin de pouvoir les exploiter dans processing.
 
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
+
 ## Code processing et enregistrement des données
 
 Du côté processing il faut maintenant s'atteler à recevoir cette chaîne de caractères, extraire les données et les enregistrer.
@@ -305,6 +310,8 @@ A chaque fois que des données sont reçues nous rechargeons le fichier, ajouton
 
 Après avoir réalisé un enregistrement, il faut bien penser à renommer le fichier *data.json* avec un nom équivoque et à recréer un fichier vide si l'on veut relancer un enregistrement.
 
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
+
 # Représentation des données
 P5js est très proche de processing. Nous n'allons donc pas rentrer dans les détails du fonctionnement de p5js.
 
@@ -358,6 +365,7 @@ A noter que dans le cadre de l'utilisation de p5.riso, l'utilisation des fonctio
 - https://antiboredom.github.io/p5.riso/#fill
 - https://antiboredom.github.io/p5.riso/#stroke
 
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
 
 ## Importer des données.
 
@@ -394,6 +402,8 @@ function preload() {
   })
 ```
 On peut donc accéder aux différents points enregistrés en utilisants les crochets **'['** et **']'** en indiquant à l'intérieur l'index du point qui nous intéresse; ainsi qu'au différentes valeurs de chaque point en utilisant l'accesseur **'.'**. Celui-ci doit être suivi d'un chaîne de caractère correspondant à une entrée de notre fichier JSON (dans notre cas 'x', 'y', 'z' ou 'timestamp').
+
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
 
 ## Créer un calque et représenter des données.
 
@@ -475,6 +485,8 @@ layerX.endShape();
 
 Une fois cela fait, il est assez simple de reproduire ce procédé 3 fois afin d'obtenir les dessins issus des données des 3 axes de l'accéléromètre chacun dans un calque de couleur différent.
 
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
+
 ## Créer un fond
 
 Créer un fond est assez simple : il s'agit simplement de créer un calque noir vide. On crée une variable **avant le setup()** :
@@ -501,6 +513,7 @@ En faisant cela cependant nous recouvrons toute notre visualisation de noir, il 
 ```js
 back.cutout(layerX)
 ```
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
 
 ## Créer le cartel
 
@@ -550,6 +563,7 @@ Il peut être nécessaire d'utiliser l'espace restant à droite pour inclure une
 
 Vous avez maintenant tous les éléments nécessaires pour réaliser votre projet, vous pouvez consulter le code de l'image réalisée [ici](visualisation/sketch.js).
 
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
 
 # (Optionnel) visualiser des données en live !
 
@@ -567,5 +581,6 @@ Le [code](visualisation_live/sketch.js) est normalement suffisament commenté po
 
 Si tous ces éléments sont réunis vous devriez voir apparaitre le résultat de vos mesure actualisé en live. 
 
+[^home](https://github.com/b2renger/p5js_gestes_de_l_ennui#contenu)<br>
 
 
