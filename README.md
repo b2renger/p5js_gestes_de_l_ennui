@@ -7,6 +7,10 @@ L'objectif de ce projet est un travail sur la représentation de données : de l
 
 Le sujet d'étude se portera sur la capatation de gestes du quotidien s'inscrivant dans une temporalité fugace porteur de la marque de l'ennui, afin de les enregistrer et les représenter dans le but de les péréniser via le processus de print.
 
+Le résultat que nous chercherons à atteindre et celui-ci :
+
+![img](assets/realisation_finale_black.png)
+
 Les données vont être enregistrée à l'aide de circuits électroniques réalisés via [arduino](https://www.arduino.cc/), les données seront ensuite enregistrées et mises en forme à l'aide de [processing](https://processing.org/), puis interprétées et mises en image par l'intermédiaire de [p5js](https://p5js.org/) et de la bibliothèque [p5.riso](https://antiboredom.github.io/p5.riso/#ex) dédiée à la préparation d'image pour l'impression par [risographie](https://fr.wikipedia.org/wiki/Duplicopieur).
 
 Il est d'ailleurs conseillé de se familiariser avec ces outils avant de se lancer dans ce tutorial :
@@ -26,25 +30,23 @@ Les compétences travaillées sont les suivantes :
 - arduino : connaitre les principes de base (entrées et sorties analogiques ou numériques, masse et 5V, branchements électroniques sur breadboard ), utilisations des bibliothèques, connection série syntaxe JSON.
 - p5js : connaitre les principes de base (setup et draw, variables et fonctions), charger des données et récupérer des données formattées en JSON, réfléchir et mettre en oeuvre un système de représentation de données temporelles. Utilisation de la bibliothèque P5.RISO.
 
-Le résultat que nous chercherons à atteindre et celui-ci :
 
-![img](assets/realisation_finale_black.png)
 
 Vous pouvez télécharger l'ensemble de cette ressource en cliquant sur le petit bouton vert en haut à droite *clone and download*.
 
 ![img](assets/download.png)
 
-Une fois télécharger vous pouvez décompresser le fichier et ajouter le dossier obtenu à votre workspace visual studio.
+Une fois téléchargé vous pouvez décompresser le fichier et ajouter le dossier obtenu à votre workspace visual studio.
 
-Bien sûr vous n'êtes absolument pas tenus à utiliser cette forme de visualisation : les capteurs que vous utiliserez, la façon dont vous les placerez et l'interprétation graphique des données que vous enregistrerez sont à votre discrétion. 
+Bien sûr vous n'êtes absolument pas tenus à utiliser cette forme de visualisation : les capteurs que vous utiliserez, la façon dont vous les placerez et l'interprétation graphique des données que vous enregistrerez sont à votre discrétion. Il est cependant obligatoire de concevoir un cartel similaire à celui proposé dans cet exemple.  
 
 Vous pouvez vous référer à ce site pour inspiration : https://informationisbeautiful.net/
+
 Vous pouvez aussi consulter ces livres disponibles à l'atelier numérique :
 - https://www.amazon.fr/gp/product/1472578309/ref=ppx_yo_dt_b_asin_title_o02_s01?ie=UTF8&psc=1
 - https://www.amazon.fr/gp/product/2072792002/ref=ppx_yo_dt_b_asin_title_o02_s02?ie=UTF8&psc=1
 - https://www.amazon.fr/gp/product/1473912148/ref=od_aui_detailpages01?ie=UTF8&psc=1
 
-Il est cependant obligatoire de concevoir un cartel similaire à celui proposé dans cet exemple.  
 
 # Contenu
 
