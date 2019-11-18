@@ -269,7 +269,7 @@ Il nous faut maintenant nous occuper de l'enregistrement sur le disque dur.
 Tout d'abord il nous faut un fichier texte vide appelé **data.json** dans un dossier /data situé à l'endroit ou votre programme processing est sauvegardé. En réalité il ne doit pas être complétement vide mais juste contenir une accolade ouvrante et une accolade fermante :
 
 ```json
-{}
+[]
 ```
 cela correspond à la structure de base d'un fichier json.
 
